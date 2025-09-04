@@ -1,0 +1,117 @@
+<?php
+/**
+ * Conditions UI for Movatech_AddOrderComment
+ */
+?>
+
+<div class="design_theme_ua_regexp">
+     <div class="admin__control-table-wrapper">
+          <table class="admin__control-table" id="mmaddorderconditions-table" style="margin-left:25%; width:70%;">
+               <thead>
+                    <tr>
+                         <th>Product Name Substring</th>
+                         <th>Product Attribute Set</th>
+                         <th>Action</th>
+                    </tr>
+               </thead>
+               <tfoot>
+                    <tr>
+                     <td colspan="3">
+                          <button id="addConditionBtn" class="action-add" title="Add" type="button">
+                               <span>Add New Condition</span>
+                          </button>
+                     </td>
+                    </tr>
+               </tfoot>
+               <tbody id="mmaddorderconditions-body">
+               </tbody>
+          </table>
+     </div>
+     </div>
+
+
+<script>
+          var conditionsSerialized = <?= /* @noEscape */  $block->getConditionsJson() ?>;
+          var attributeSetOptions = <?= /* @noEscape */  $block->getAttributeSetOptions() ?>;
+
+require([
+          "jquery",
+], function($){
+
+      $('#addConditionBtn').on('click', function (e){
+                var tBody = $('#mmaddorderconditions-body');
+                var uName = $.now();
+
+                var select = document.createElement('SELECT');
+                select.setAttribute('name', 'attribute_set['+uName+']');
+                select.setAttribute('id', 'attribute_set_'+uName);
+                select.setAttribute('data-form-part', 'mmaddordercomment_rule_form');
+                var option = document.createElement('OPTION');
+                option.setAttribute("value","");
+                option.setAttribute("label","");
+                $(option).appendTo(select);
+                attributeSetOptions.forEach.call(attributeSetOptions, function (element){
+                          var option = document.createElement('OPTION');
+                          option.value = element.value;
+                          option.text = element.label;
+                          $(option).appendTo(select);
+                });
+
+                var html = '<tr id="row_'+uName+'"><td><input type="text" name="product_name['+uName+
+                                             ']" value="" id="product_name_'+uName+
+                                             '" data-form-part="mmaddordercomment_rule_form" style="width:100%;"></input></td>'+
+                                             '<td id="select_'+uName+'"></td><td class="col-actions"><button id="btn_'+uName+
+                                             '" class="action-delete" type="button">'+
+                                             '<span>Delete</span></button></td></tr>';
+                $(html).appendTo(tBody);
+                $(select).appendTo("#select_"+uName);
+
+                $('#btn_'+uName).on('click', function(e){
+                          var row = $('#row_'+uName);
+                          row.remove();
+                });
+      });
+   
+      /* 
+      * Append data to conditions
+      */
+      if (conditionsSerialized != "") {
+           conditionsSerialized.forEach.call(conditionsSerialized, function (element){
+                var tBody = $('#mmaddorderconditions-body');
+                var uName = $.now();
+
+                var select = document.createElement('SELECT');
+                select.setAttribute('name', 'attribute_set['+uName+']');
+                select.setAttribute('id', 'attribute_set_'+uName);
+                select.setAttribute('data-form-part', 'mmaddordercomment_rule_form');
+                var option = document.createElement('OPTION');
+                option.setAttribute("value","");
+                option.setAttribute("label","");
+                $(option).appendTo(select);
+                attributeSetOptions.forEach.call(attributeSetOptions, function (element){
+                          var option = document.createElement('OPTION');
+                          option.value = element.value;
+                          option.text = element.label;
+                          $(option).appendTo(select);
+                });
+
+                var html = '<tr id="row_'+uName+'"><td><input type="text" name="product_name['+uName+
+                                             ']" value="'+element.product_name+
+                                             '" id="product_name_'+uName+
+                                             '" data-form-part="mmaddordercomment_rule_form" style="width:100%"></input></td>'+
+                                             '<td id="select_'+uName+'"></td><td class="col-actions"><button id="btn_'+uName+
+                                             '" class="action-delete" type="button">'+
+                                             '<span>Delete</span></button></td></tr>';
+                $(html).appendTo(tBody);
+
+                $(select).val(element.attribute_set);
+                $(select).appendTo("#select_"+uName);
+
+                $('#btn_'+uName).on('click', function(e){
+                          var row = $('#row_'+uName);
+                          row.remove();
+                });
+           });
+     }
+});
+</script>

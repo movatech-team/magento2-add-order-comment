@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Movatech\AddOrderComment\Model\ResourceModel\Rule">
+        <arguments>
+            <argument name="eventManager" xsi:type="object">Magento\Framework\Event\Manager\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Movatech\AddOrderComment\Model\ResourceModel\Rule\Collection" shared="false" />
+    <preference for="Movatech\AddOrderComment\Api\Data\RuleInterface" type="Movatech\AddOrderComment\Model\Rule" />
+    <preference for="Movatech\AddOrderComment\Api\AddOrderCommentRepositoryInterface" type="Movatech\AddOrderComment\Model\AddOrderCommentRuleRepository" />
+    <type name="Magento\Framework\Model\Entity\RepositoryFactory">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="Movatech\AddOrderComment\Api\Data\RuleInterface" xsi:type="string">Movatech\AddOrderComment\Api\AddOrderCommentRepositoryInterface</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\MetadataPool">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="Movatech\AddOrderComment\Api\Data\RuleInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="string">addorder_rule</item>
+                    <item name="identifierField" xsi:type="string">rule_id</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+   // the code is intentionally left blank (as the repository used for demonstration purposes only)
+</config>

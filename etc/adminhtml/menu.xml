@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Movatech_Marketing::title" title="Movatech" translate="title" module="Movatech_AddOrderComment" sortOrder="200"
+             parent="Magento_Backend::marketing"  resource="Magento_Config::config"/>
+        <add id="Movatech_AddOrderComment::index" title="Order Comments" translate="title" module="Movatech_AddOrderComment" sortOrder="20"
+             parent="Movatech_Marketing::title" 
+             action="mmaddordercomment/index/index" 
+             dependsOnConfig="mmaddordercomment/order_comment/enable"
+             resource="Magento_Config::config"/>
+    </menu>
+</config>

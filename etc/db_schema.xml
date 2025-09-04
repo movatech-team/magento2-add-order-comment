@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="addorder_rule" resource="default" engine="innodb" comment="Movatech Add Order Comment">
+        <column xsi:type="int" name="rule_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="varchar" name="name" nullable="true" length="255" comment="Name"/>
+        <column xsi:type="text" name="description" nullable="true" comment="Description"/>
+        <column xsi:type="smallint" name="is_active" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Is Active"/>
+        <column xsi:type="text" name="conditions_serialized" nullable="true" comment="Conditions Serialized"/>
+        <column xsi:type="smallint" name="aggregator" nullable="true" comment="Condition Aggregator"/>
+        <column xsi:type="varchar" name="comment" nullable="true" length="255" comment="Order Comment"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="rule_id"/>
+        </constraint>
+        <index referenceId="ADDORDER_RULE_IS_ACTIVE_RULE_ID" indexType="btree">
+            <column name="is_active"/>
+            <column name="rule_id"/>
+        </index>
+    </table>
+</schema>
